@@ -21,7 +21,7 @@ public class Chrome {
         driver = new ChromeDriver(capabilities);
     }
     @Test
-    public void test(){
+    public void testME(){
         driver.get("http://lazycoder.io/feedback    ");
         Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
     }
