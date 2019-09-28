@@ -30,4 +30,12 @@ public class Chrome {
     public void testTeardown(){
         driver.quit();
     }
+	
+	@Test
+    public void testing2(){
+        driver.get("http://lazycoder.io/feedback    ");
+        Assert.assertEquals(driver.getTitle(), "Feedback test2 ww | Lazy Coder IO");
+    }
+	
+	
 }
