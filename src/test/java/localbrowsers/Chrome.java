@@ -30,7 +30,6 @@ public class Chrome {
         driver.get("https://www.youtube.com/?hl=es-419");
         Assert.assertEquals(driver.getTitle(), "YouTube");
     }
-
     @AfterTest
     public void testTeardown(){
         driver.quit();
