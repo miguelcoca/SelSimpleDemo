@@ -25,6 +25,12 @@ public class Chrome {
         driver.get("http://lazycoder.io/feedback    ");
         Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
     }
+    
+    @Test2
+    public void testTheGooglePage(){
+        driver.get("http://google.com.bo");
+        Assert.assertEquals(driver.getTitle(), "Google");
+    }
 
     @AfterTest
     public void testTeardown(){
