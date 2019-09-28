@@ -36,4 +36,9 @@ public class Chrome {
         driver.get("http://lazycoder.io/feedback    ");
         Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
     }
+		@TestEditUserGit
+    public void test(){
+        driver.get("http://lazycoder.io/feedback    ");
+        Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
+    }
 }
