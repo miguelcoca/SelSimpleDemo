@@ -29,6 +29,20 @@ public class Chrome {
     }
 
     @Test
+    public void gitLogin() {
+        driver.get("https://github.com/login");
+        WebElement username = driver.findElement(By.xpath("//*[contains(@id, 'login_field')]"));
+        WebElement password = driver.findElement(By.xpath("//*[contains(@id, 'password')]"));
+        WebElement login = driver.findElement(By.xpath("//input[@value = 'Sign in']"));
+        username.sendKeys("jhudy.delgadillo@gmail.com");
+        password.sendKeys("pass");
+        login.click();
+        String actualUrl = "https://github.com/";
+        String expectedUrl = driver.getCurrentUrl();
+        Assert.assertEquals(expectedUrl, actualUrl);
+    }
+
+    @Test
     public void test(){
         driver.get("http://lazycoder.io/feedback");
         Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
