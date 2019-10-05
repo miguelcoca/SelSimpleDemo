@@ -35,21 +35,31 @@ public class Chrome {
     }
 
     @Test
-<<<<<<< HEAD
     public void gitLogin() {
         driver.get("https://github.com/login");
         WebElement username = driver.findElement(By.xpath("//*[contains(@id, 'login_field')]"));
         WebElement password = driver.findElement(By.xpath("//*[contains(@id, 'password')]"));
         WebElement login = driver.findElement(By.xpath("//input[@value = 'Sign in']"));
         username.sendKeys("jhudy.delgadillo@gmail.com");
-        password.sendKeys("pass");
+        password.sendKeys("Passs");
         login.click();
-        String actualUrl = "https://github.com/";
-        String expectedUrl = driver.getCurrentUrl();
-        Assert.assertEquals(expectedUrl, actualUrl);
+        WebElement userGit = driver.findElement(By.xpath("(//*[contains(text(),'jhudy')])[1]"));
     }
 
-=======
+    @Test
+    public void setProfile() {
+        gitLogin();
+        WebElement optionsUser = driver.findElement(By.xpath("(//span[@class='dropdown-caret'])[2]"));
+        optionsUser.click();
+        WebElement userProfile = driver.findElement(By.xpath("//a[text()='Your profile']"));
+        userProfile.click();
+        WebElement setProfile = driver.findElement(By.xpath("(//button[ text()='Edit profile'])[1]"));
+        setProfile.click();
+        WebElement bioUser = driver.findElement(By.xpath("//textarea[@name='user[profile_bio]']"));
+        Assert.assertNotNull(bioUser);
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
@@ -67,8 +77,6 @@ public class Chrome {
         driver.findElement(By.xpath(buttonCommit)).click();
     }
 
-
->>>>>>> e121f02527d3012cff94f5fd3d889adf5a310903
     @Test
     public void test(){
         driver.get("http://lazycoder.io/feedback");
