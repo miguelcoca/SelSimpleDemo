@@ -19,6 +19,12 @@ public class Chrome {
 
     public String gTitleLocator=".g-title";
     public String lButton = "//a[@href='https://seleniumaboveandbeyond.com' and contains(@class,'button')]";
+    public String inputUserName = "login_field";
+    public String sUserName = "redridehell@gmail.com";
+    public String inputPassword = "password";
+    public String sPassword = "noVoyAEscribirMiPasswd";
+    public String buttonCommit = "//input[@name='commit']";
+    public String ghUserName="(//span[contains(text(),'miguelcoca')])[8]";
 
     @BeforeTest
     public void chromeSetup(){
@@ -29,6 +35,7 @@ public class Chrome {
     }
 
     @Test
+<<<<<<< HEAD
     public void gitLogin() {
         driver.get("https://github.com/login");
         WebElement username = driver.findElement(By.xpath("//*[contains(@id, 'login_field')]"));
@@ -42,6 +49,26 @@ public class Chrome {
         Assert.assertEquals(expectedUrl, actualUrl);
     }
 
+=======
+    public void login(){
+        loginAction();
+        Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
+    }
+
+    private void loginAction() {
+        driver.navigate().to("https://github.com/login");
+
+        WebElement InputUserName = driver.findElement(By.id(inputUserName));
+        InputUserName.sendKeys(sUserName);
+
+        WebElement InputPassword = driver.findElement(By.id(inputPassword));
+        InputPassword.sendKeys(sPassword);
+
+        driver.findElement(By.xpath(buttonCommit)).click();
+    }
+
+
+>>>>>>> e121f02527d3012cff94f5fd3d889adf5a310903
     @Test
     public void test(){
         driver.get("http://lazycoder.io/feedback");
