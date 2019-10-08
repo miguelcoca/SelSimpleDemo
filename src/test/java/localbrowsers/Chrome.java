@@ -85,6 +85,24 @@ public class Chrome {
     }
 
     @Test
+    public void browseFiles() throws InterruptedException {
+        driver.manage().window().maximize();
+        gitLogin();
+        WebElement project = driver.findElement(By.xpath("(//a[@href='/miguelcoca/SelSimpleDemo'])[1]"));
+        project.click();
+        WebElement commitsTab = driver.findElement(By.xpath("//a[@href='/miguelcoca/SelSimpleDemo/commits/master']"));
+        commitsTab.click();
+        Thread.sleep (1000);   // it is necessary to find the next element
+        WebElement selectCommit = driver.findElement(By.xpath("//*[contains(text(),'couple sample tests added.')]"));
+        selectCommit.click();
+        Thread.sleep (1000);  // it is necessary to find the next element
+        WebElement buttonBrowseFiles = driver.findElement(By.xpath("//a[text()='Browse files']"));
+        buttonBrowseFiles.click();
+        WebElement tableFiles = driver.findElement(By.xpath("//table[@class='files js-navigation-container js-active-navigation-container']"));
+        Assert.assertNotNull(tableFiles);
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
