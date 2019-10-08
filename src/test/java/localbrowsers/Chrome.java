@@ -60,6 +60,20 @@ public class Chrome {
     }
 
     @Test
+    public void setStatus(){
+        gitLogin();
+        WebElement optionsUser = driver.findElement(By.xpath("(//span[@class='dropdown-caret'])[2]"));
+        optionsUser.click();
+        WebElement userProfile = driver.findElement(By.xpath("//a[text()='Your profile']"));
+        userProfile.click();
+        WebElement setStatus = driver.findElement(By.xpath("(//span[text()='Set status'])[2]"));
+        setStatus.click();
+        WebElement formEditStatus = driver.findElement(By.xpath("(//form[@class='position-relative flex-auto js-user-status-form'])[2]"));
+        Assert.assertNotNull(formEditStatus);
+        System.out.println("llego"+ formEditStatus);
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
