@@ -74,6 +74,17 @@ public class Chrome {
     }
 
     @Test
+    public void pullRequestsList() throws InterruptedException {
+        driver.manage().window().maximize();
+        driver.get("https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952");
+        WebElement pullRequestsTab = driver.findElement(By.xpath("//span[text()='Pull requests']"));
+        pullRequestsTab.click();
+        Thread.sleep (1000); // to be able to see the driver procedure calmly and find items that are not immediately available
+        WebElement requestsList = driver.findElement(By.xpath("//*[@id='js-issues-toolbar']"));
+        Assert.assertNotNull(requestsList);
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
