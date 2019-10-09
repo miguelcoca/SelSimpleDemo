@@ -34,6 +34,10 @@ public class Chrome {
     public String inputBuscarRep="//input[@id='your-repos-filter']";
     public String imgAvatar="(//img[@class='avatar'])[2]";
     public String dropRep="//a[(contains(@class,'drop')) and (@href='/danieldas?tab=repositories')]";
+//browse files
+    public String aBrowse="//a[(text()='Browse files')]";
+    public String summaryClone="//summary[@class='btn btn-sm ml-2 btn-primary']";
+    
 /*
 -Tab Pull requests
    Xpath:    //a[(contains(@class,'js')) and (@href='/miguelcoca/SelSimpleDemo/pulls')]          
@@ -115,6 +119,13 @@ public class Chrome {
         driver.findElement(By.xpath(imgAvatar)).click();
         driver.findElement(By.xpath(dropRep)).click();
         Assert.assertNotNull(driver.findElement(By.xpath(inputBuscarRep)));
+    }
+    @Test
+    public void browseFiles(){
+        loginAction();
+        driver.navigate().to("https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952?diff=unified");
+        driver.findElement(By.xpath(aBrowse)).click();
+        Assert.assertNotNull(driver.findElement(By.xpath(summaryClone)));
     }
     @Test
     public void test(){
