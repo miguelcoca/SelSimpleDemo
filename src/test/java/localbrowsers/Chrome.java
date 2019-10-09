@@ -108,6 +108,15 @@ public class Chrome {
         By repsiLinkLocator = By.linkText(repositorio.getText());
         driver.findElement(repsiLinkLocator).click();
     }
+    @Test
+    public void met_pullRequest(){
+        loginAction();
+        driver.navigate().to(URLdemo);
+        WebElement tab_pullrequest= driver.findElement(By.xpath(expPullRequeest));
+        tab_pullrequest.click();
+        Assert.assertTrue(tab_pullrequest.getText().contains("Pull requests"));
+
+    }
 
     @Test
     public void test() {
