@@ -25,7 +25,11 @@ public class Chrome {
 //edit profile
     public String buttonEdit = "(//button[(text()='Edit profile') and (@name='button')])[1]";
     public String buttonGuardarProfile = "//button[@class='btn btn-sm btn-primary']";
-
+//set status
+    public String aSetStatus = "//div[@class='d-inline-block text-gray-dark']/child:: span";
+    public String inputEstado = "(//input[@name='message'])[2]";
+    public String buttonGuardarEstado = "(//button[@class='width-full btn btn-primary mr-2 js-user-status-submit'])[2]";
+    public String sEstado = "hola";
 /*
 -Tab Pull requests
    Xpath:    //a[(contains(@class,'js')) and (@href='/miguelcoca/SelSimpleDemo/pulls')]          
@@ -90,7 +94,16 @@ public class Chrome {
         driver.findElement(By.xpath(buttonEdit)).click();
         driver.findElement(By.xpath(buttonGuardarProfile)).click();
     }
+    @Test
+    public void setStatus(){
+        loginAction();
+        driver.navigate().to("https://github.com/danieldas");
+        driver.findElement(By.xpath(aSetStatus)).click();
 
+        WebElement InputEstado = driver.findElement(By.xpath(inputEstado));
+        InputEstado.sendKeys(sEstado);
+        driver.findElement(By.xpath(buttonGuardarEstado)).click();
+    }
     @Test
     public void test(){
         driver.get("https://www.youtube.com/");
