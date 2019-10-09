@@ -93,6 +93,14 @@ public class Chrome {
     }
 
     @Test
+    public void met_setEditProfile(){
+        loginAction();
+        driver.navigate().to(URLgit);
+        driver.findElement(By.xpath(expEditProfile)).click();
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    }
+
+    @Test
     public void test() {
         driver.get("http://lazycoder.io/feedback");
         System.out.println(driver.getTitle());
