@@ -32,7 +32,7 @@ package localbrowsers;
 10. signo + de lateriañ isquierdo
 (//span[contains(@data-code-marker,'+')])[1]
 span.blob-code-inner.blob-code-marker[data-code-marker='+']
-*
+
 * */
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
