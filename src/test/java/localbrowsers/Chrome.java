@@ -4,6 +4,11 @@
 (//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]
 //a[text()='Your repositories']
 
+.pt-1.ws-normal.user-status-message-wrapper.f6>div>span
+.d-none.d-md-block>div>div>button
+.UnderlineNav-body>a:nth-child(2)
+.dropdown-menu.dropdown-menu-sw.mt-2>*:nth-child(6)
+
 */
 package localbrowsers;
 
