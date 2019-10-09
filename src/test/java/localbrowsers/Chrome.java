@@ -81,6 +81,17 @@ public class Chrome {
         driver = new ChromeDriver(capabilities);
     }
 
+
+
+    @Test
+    public void met_setStatus(){
+        loginAction();
+        driver.navigate().to(URLgit);
+        WebElement titulo = driver.findElement(By.xpath(expSetStatus));
+        boolean paso= titulo.getText().contains("Set status");
+        Assert.assertTrue(paso);
+    }
+
     @Test
     public void test() {
         driver.get("http://lazycoder.io/feedback");
