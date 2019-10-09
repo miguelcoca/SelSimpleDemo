@@ -30,6 +30,10 @@ public class Chrome {
     public String inputEstado = "(//input[@name='message'])[2]";
     public String buttonGuardarEstado = "(//button[@class='width-full btn btn-primary mr-2 js-user-status-submit'])[2]";
     public String sEstado = "hola";
+//drop repositories
+    public String inputBuscarRep="//input[@id='your-repos-filter']";
+    public String imgAvatar="(//img[@class='avatar'])[2]";
+    public String dropRep="//a[(contains(@class,'drop')) and (@href='/danieldas?tab=repositories')]";
 /*
 -Tab Pull requests
    Xpath:    //a[(contains(@class,'js')) and (@href='/miguelcoca/SelSimpleDemo/pulls')]          
@@ -103,6 +107,14 @@ public class Chrome {
         WebElement InputEstado = driver.findElement(By.xpath(inputEstado));
         InputEstado.sendKeys(sEstado);
         driver.findElement(By.xpath(buttonGuardarEstado)).click();
+    }
+    @Test
+    public void dropRepositories(){
+        loginAction();
+        driver.navigate().to("https://github.com/danieldas");
+        driver.findElement(By.xpath(imgAvatar)).click();
+        driver.findElement(By.xpath(dropRep)).click();
+        Assert.assertNotNull(driver.findElement(By.xpath(inputBuscarRep)));
     }
     @Test
     public void test(){
