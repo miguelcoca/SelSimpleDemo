@@ -24,7 +24,7 @@ public class Firefox {
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             FirefoxBinary ff = new FirefoxBinary(new File("/Applications/Firefox.app/Contents/MacOS/firefox-bin"));
             FirefoxProfile ffp = new FirefoxProfile();
-            driver = new FirefoxDriver(ff, ffp, capabilities);
+            driver = new FirefoxDriver(capabilities);
         } else {
             driver = new FirefoxDriver();
         }

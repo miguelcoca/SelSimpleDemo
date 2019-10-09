@@ -1,6 +1,8 @@
 package localbrowsers;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -12,6 +14,14 @@ import org.testng.annotations.Test;
 @Test(groups = {"mac", "windows"})
 public class Chrome {
     private WebDriver driver;
+    public String gTitleLocator=".g-title";
+    public String lButton = "//a[@href='https://seleniumaboveandbeyond.com' and contains(@class,'button')]";
+    public String inputUserName = "login_field";
+    public String sUserName = "daniel-sj77@hotmail.com";
+    public String inputPassword = "password";
+    public String sPassword = "miPasswordSecreto";
+    public String buttonCommit = "//input[@name='commit']";
+    public String ghUserName="(//span[contains(text(),'danieldas')])[8]";
 
     @BeforeTest
     public void chromeSetup(){
@@ -20,10 +30,29 @@ public class Chrome {
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new ChromeDriver(capabilities);
     }
+    
+    @Test
+    public void login(){
+        loginAction();
+        Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
+    }
+
+    private void loginAction() {
+        driver.navigate().to("https://github.com/login");
+
+        WebElement InputUserName = driver.findElement(By.id(inputUserName));
+        InputUserName.sendKeys(sUserName);
+
+        WebElement InputPassword = driver.findElement(By.id(inputPassword));
+        InputPassword.sendKeys(sPassword);
+
+        driver.findElement(By.xpath(buttonCommit)).click();
+    }
+
     @Test
     public void test(){
-        driver.get("http://lazycoder.io/feedback    ");
-        Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
+        driver.get("https://www.youtube.com/");
+        Assert.assertEquals(driver.getTitle(), "YouTube");
     }
     @Test
     public void test2(){
