@@ -101,6 +101,15 @@ public class Chrome {
     }
 
     @Test
+    public void met_repositories() {
+        loginAction();
+        driver.navigate().to(URLgit);
+        WebElement repositorio = driver.findElement(By.xpath(expRepositories));
+        By repsiLinkLocator = By.linkText(repositorio.getText());
+        driver.findElement(repsiLinkLocator).click();
+    }
+
+    @Test
     public void test() {
         driver.get("http://lazycoder.io/feedback");
         System.out.println(driver.getTitle());
