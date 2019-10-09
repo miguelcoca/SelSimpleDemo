@@ -1,5 +1,6 @@
 /*
 (//span[text()='Set status'])[2]
+(//button[contains(text(),'Edit profile')])[1]
 
 */
 package localbrowsers;
@@ -31,6 +32,8 @@ public class Chrome {
     public String bProfile="//a[contains(text(),'Your profile')]";
     public String bAvatar="(//*[@class='avatar'])[2]";
     public String bSetStatus="(//span[text()='Set status'])[2]";
+    public String bEditProfile="(//button[contains(text(),'Edit profile')])[1]";
+
 
 
 
@@ -75,6 +78,12 @@ public class Chrome {
     public void setStatus(){
         goToProfile();
         Assert.assertNotNull(driver.findElement(By.xpath(bSetStatus)));
+    }
+
+    @Test
+    public void editProfile(){
+        goToProfile();
+        Assert.assertNotNull(driver.findElement(By.xpath(bEditProfile)));
     }
 
     @AfterTest
