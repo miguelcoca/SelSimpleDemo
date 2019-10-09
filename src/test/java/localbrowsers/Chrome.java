@@ -1,6 +1,7 @@
 /*
 (//span[text()='Set status'])[2]
 (//button[contains(text(),'Edit profile')])[1]
+(//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]
 
 */
 package localbrowsers;
@@ -33,6 +34,8 @@ public class Chrome {
     public String bAvatar="(//*[@class='avatar'])[2]";
     public String bSetStatus="(//span[text()='Set status'])[2]";
     public String bEditProfile="(//button[contains(text(),'Edit profile')])[1]";
+    public String bRepositories="(//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]";
+
 
 
 
@@ -84,6 +87,12 @@ public class Chrome {
     public void editProfile(){
         goToProfile();
         Assert.assertNotNull(driver.findElement(By.xpath(bEditProfile)));
+    }
+
+    @Test
+    public void repositories(){
+        goToProfile();
+        Assert.assertNotNull(driver.findElement(By.xpath(bRepositories)));
     }
 
     @AfterTest
