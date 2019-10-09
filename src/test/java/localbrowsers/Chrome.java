@@ -22,6 +22,9 @@ public class Chrome {
     public String sPassword = "miPasswordSecreto";
     public String buttonCommit = "//input[@name='commit']";
     public String ghUserName="(//span[contains(text(),'danieldas')])[8]";
+//edit profile
+    public String buttonEdit = "(//button[(text()='Edit profile') and (@name='button')])[1]";
+    public String buttonGuardarProfile = "//button[@class='btn btn-sm btn-primary']";
 
 /*
 -Tab Pull requests
@@ -79,6 +82,13 @@ public class Chrome {
         InputPassword.sendKeys(sPassword);
 
         driver.findElement(By.xpath(buttonCommit)).click();
+    }
+    @Test
+    public void editProfile(){
+        loginAction();
+        driver.navigate().to("https://github.com/danieldas");
+        driver.findElement(By.xpath(buttonEdit)).click();
+        driver.findElement(By.xpath(buttonGuardarProfile)).click();
     }
 
     @Test
