@@ -42,6 +42,11 @@ public class Chrome {
     }
 
     @Test
+    public void checkRepositories(){
+        Assert.assertNotNull(driver.findElement(By.xpath(sXpRepositories)));
+    }
+
+    @Test
     public void checkYourRepositories(){
         Assert.assertNotNull(driver.findElement(By.xpath(sXpRepository)));
     }
