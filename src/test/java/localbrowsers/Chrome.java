@@ -26,7 +26,7 @@ public class Chrome {
     public String buttonCommit = "//input[@name='commit']";
     public String ghUserName="(//span[contains(text(),'miguelcoca')])[8]";
 
-    public String sXpEdit = "(//div[@class='d-none d-md-block']/div[@class='js-profile-editable-area']/div[@class='hide-sm hide-md']/button[@name='button'])";
+    public String sXpEditButton = "(//div[@class='d-none d-md-block']/div[@class='js-profile-editable-area']/div[@class='hide-sm hide-md']/button[@name='button'])";
     public String sXpSetStatus = "(//div[@class='d-inline-block text-gray-dark']/span[contains(.,'Set status')])";
     public String sXpRepositories = "(//a[contains(.,'Repositories')])";
     public String sXpRepository = "(//a[contains(.,'Your repositories')])";
@@ -39,6 +39,11 @@ public class Chrome {
         ChromeOptions options = new ChromeOptions();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new ChromeDriver(capabilities);
+    }
+
+    @Test
+    public void checkEditButton(){
+        Assert.assertNotNull(driver.findElement(By.xpath(sXpEditButton)));
     }
 
     @Test
