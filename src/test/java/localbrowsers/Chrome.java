@@ -47,6 +47,11 @@ public class Chrome {
     }
 
     @Test
+    public void checkEditProfile(){
+        Assert.assertNotNull(driver.findElement(By.xpath(sXpEditProfile)));
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
