@@ -13,24 +13,33 @@ import org.testng.annotations.Test;
 public class Chrome {
     private WebDriver driver;
 
+    public String sXpEdit = "(//div[@class='d-none d-md-block']/div[@class='js-profile-editable-area']/div[@class='hide-sm hide-md']/button[@name='button'])";
+    public String sXpSetStatus = "(//div[@class='d-inline-block text-gray-dark']/span[contains(.,'Set status')])";
+    public String sXpRepositories = "(//a[contains(.,'Repositories')])";
+    public String sXpRepository = "(//a[contains(.,'Your repositories')])";
+    public String sXpEditProfile = "(//button[contains(.,'Edit profile')]))";
+
     @BeforeTest
-    public void chromeSetup(){
+    public void chromeSetup() {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeOptions options = new ChromeOptions();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new ChromeDriver(capabilities);
     }
+
     @Test
-    public void test(){
+    public void test() {
         driver.get("http://lazycoder.io/feedback    ");
         Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
     }
 
     @AfterTest
-    public void testTeardown(){
+    public void testTeardown() {
         driver.quit();
     }
-	   @AfterTest
-    public void test1(){
+
+    @AfterTest
+    public void test1() {
         driver.quit();
+    }
 }
