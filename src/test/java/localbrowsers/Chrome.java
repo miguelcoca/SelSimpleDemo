@@ -1,11 +1,14 @@
 package localbrowsers;
 
+import com.google.gson.annotations.Until;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -42,6 +45,10 @@ public class Chrome {
 
     private void loginAction() {
         driver.navigate().to("https://github.com/login");
+
+        WebDriverWait customWait = new WebDriverWait(driver,60);
+        customWait.until(ExpectedConditions.
+                visibilityOfElementLocated(By.id(inputUserName)));
 
         WebElement InputUserName = driver.findElement(By.id(inputUserName));
         InputUserName.sendKeys(sUserName);
