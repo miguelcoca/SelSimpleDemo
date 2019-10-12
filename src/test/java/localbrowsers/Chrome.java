@@ -18,10 +18,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 
 
 @Test(groups = {"mac", "windows"})
@@ -61,6 +65,10 @@ public class Chrome {
     private void loginAction() {
         driver.navigate().to("https://github.com/login");
 
+        WebDriverWait customWait = new WebDriverWait(driver,10);
+        customWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id(inputUserName));
+
+
         WebElement InputUserName = driver.findElement(By.id(inputUserName));
         InputUserName.sendKeys(sUserName);
 
@@ -81,6 +89,7 @@ public class Chrome {
 
     @Test
     public void userName(){
+        web>
         goToProfile();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
     }
