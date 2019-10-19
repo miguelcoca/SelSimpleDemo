@@ -43,10 +43,14 @@ public class Chrome {
     public String bAvatar="(//*[@class='avatar'])[2]";
     public String bSetStatus="(//span[text()='Set status'])[2]";
     public String bEditProfile="(//button[contains(text(),'Edit profile')])[1]";
-    public String bRepositories="(//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]";
+    public String bRepositories="(//span[@class='css-truncate css-truncate-target'])[2]";
     public String bYourRepositories="//a[text()='Your repositories']";
 
     public String bSingIn="//a[@class='HeaderMenu-link no-underline mr-3']";
+    public String lCode="//span[@class='simplified-path']";
+    public String chromeFile="(//a[@class='js-navigation-open'])[2]";
+
+
 
     @BeforeTest
     public void chromeSetup(){
@@ -70,47 +74,26 @@ public class Chrome {
         driver.findElement(By.xpath(buttonCommit)).click();
     }
 
-    private void goToProfile() {
-        openUserSetup();
-        driver.findElement(By.xpath(bProfile)).click();
-    }
-
-    private void openUserSetup() {
-        driver.findElement(By.xpath(bAvatar)).click();
-    }
-
-    @Test
-    public void userName(){
-        goToProfile();
-        Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
+    private void goToRepositories() {
+        driver.findElement(By.xpath(bRepositories)).click();
+        driver.findElement(By.xpath(lCode)).click();
+        try{
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ie){
+        }
+        driver.findElement(By.xpath(chromeFile)).click();
     }
 
     @Test
-    public void setStatus(){
-        goToProfile();
-        Assert.assertNotNull(driver.findElement(By.xpath(bSetStatus)));
-    }
-
-    @Test
-    public void editProfile(){
-        goToProfile();
-        Assert.assertNotNull(driver.findElement(By.xpath(bEditProfile)));
-    }
-
-    @Test
-    public void repositories(){
-        goToProfile();
-        Assert.assertNotNull(driver.findElement(By.xpath(bRepositories)));
-    }
-
-    @Test
-    public void yourRepositories(){
-        goToProfile();
+    public void code(){
+        goToRepositories();
         Assert.assertNotNull(driver.findElement(By.xpath(bYourRepositories)));
     }
 
     @AfterTest
-    public void testTeardown(){
-        driver.quit();
+    public void testTeardown()
+    {
+//        driver.quit();
     }
 }
