@@ -3,14 +3,11 @@
 (//button[contains(text(),'Edit profile')])[1]
 (//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]
 //a[text()='Your repositories']
-
 .pt-1.ws-normal.user-status-message-wrapper.f6>div>span
 .d-none.d-md-block>div>div>button
 .UnderlineNav-body>a:nth-child(2)
 .dropdown-menu.dropdown-menu-sw.mt-2>*:nth-child(6)
-
 espira test
-
 */
 package localbrowsers;
 
@@ -49,10 +46,7 @@ public class Chrome {
     public String bRepositories="(//a[@class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '])[1]";
     public String bYourRepositories="//a[text()='Your repositories']";
 
-    //a[text()='Your repositories']
-
-
-
+    public String bSingIn="//a[@class='HeaderMenu-link no-underline mr-3']";
 
     @BeforeTest
     public void chromeSetup(){
@@ -65,18 +59,14 @@ public class Chrome {
     }
 
     private void loginAction() {
-        driver.navigate().to("https://github.com/login");
-
-        WebDriverWait customWait = new WebDriverWait(driver,10);
-        customWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id(inputUserName));
-
-
+        driver.navigate().to("https://github.com");
+        driver.findElement(By.xpath(bSingIn)).click();
+//        WebDriverWait customWait = new WebDriverWait(driver,10);
+//        customWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id(inputUserName)));
         WebElement InputUserName = driver.findElement(By.id(inputUserName));
         InputUserName.sendKeys(sUserName);
-
         WebElement InputPassword = driver.findElement(By.id(inputPassword));
         InputPassword.sendKeys(sPassword);
-
         driver.findElement(By.xpath(buttonCommit)).click();
     }
 
@@ -91,7 +81,6 @@ public class Chrome {
 
     @Test
     public void userName(){
-        web>
         goToProfile();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
     }
