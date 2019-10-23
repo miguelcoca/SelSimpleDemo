@@ -1,37 +1,61 @@
-
 package localbrowsers;
 
-import com.google.gson.annotations.Until;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.WebElement;
 
 @Test(groups = {"mac", "windows"})
 public class Chrome {
     private WebDriver driver;
 
-    public String gTitleLocator=".g-title";
-    public String lButton = "//a[@href='https://seleniumaboveandbeyond.com' and contains(@class,'button')]";
+    //SET THE SPECIFIC VALUES!!!! HERE (they are static)
+    /////////////////////////////SET YOUR EMAIL, PASSWORD and USERNAME
+    public String sUserName = "marcelo_0614@hotmail.com";
+    public String sPassword = "Pepe.0614asd";
+    public String UserInSession = "marcelo0614";
+    /////////////////////////////SET THE OWNER OF THE REPO, THE REPO NAME and the FILE that will be used in the test
+    public String owner="miguelcoca";
+    public String repositorie="SelSimpleDemo";
+    public String file="Chrome.java";
+
+
+    //Initial Page
+    public String intialPage="https://github.com";
+    public String signIn="//a[@href='/login']";
+
+    //Login page
+    public String loginURL = "https://github.com/login";
     public String inputUserName = "login_field";
-    public String sUserName = "redridehell@gmail.com";
     public String inputPassword = "password";
-    public String sPassword = "noVoyAEscribirMiPasswd";
+
     public String buttonCommit = "//input[@name='commit']";
-    public String ghUserName="(//span[contains(text(),'miguelcoca')])[8]";
+    public String ghUserName = "(//span[contains(text(),'" + UserInSession + "')])[8]";
+
+    //UserPage
+    public String findRepositoriesSearchField="//input[@class='form-control input-block mb-3 js-filterable-field js-your-repositories-search']";
+    public String searchThisRepositorie=owner+"/"+repositorie;
+    public String repositorieFound="//ul[@class='list-style-none filterable-active']";
+
+    //RepoPage
+    public String folder="//a[@title='This path skips through empty directories']";
+    public String fileToWork="//tbody//td[@class='content']//*[text()[contains(.,'"+file+"')]]";
+
+    //InsideTheFile
+    public String description="//span[@class='file-mode']/parent::div";
+    public String editButton="//button[@aria-label='Edit the file in your fork of this project']";
+    public String scrollbar="//div[@class='CodeMirror-vscrollbar']";
+    public String firstRow="//pre[@class=' CodeMirror-line ']";
 
     @BeforeTest
-    public void chromeSetup(){
+    public void chromeSetup() {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeOptions options = new ChromeOptions();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -39,60 +63,71 @@ public class Chrome {
     }
 
     @Test
-    public void login(){
-        loginAction();
-        Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
-    }
+    public void verifyCode() {
+        driver.manage().window().maximize();
+        driver.navigate().to(intialPage);
+        driver.findElement(By.xpath(signIn)).click();
 
-    private void loginAction() {
-        driver.navigate().to("https://github.com/login");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        WebDriverWait customWait = new WebDriverWait(driver,60);
-        customWait.until(ExpectedConditions.
-                visibilityOfElementLocated(By.id(inputUserName)));
-
-        WebElement InputUserName = driver.findElement(By.id(inputUserName));
-        InputUserName.sendKeys(sUserName);
-
-        WebElement InputPassword = driver.findElement(By.id(inputPassword));
-        InputPassword.sendKeys(sPassword);
-
+        driver.findElement(By.id(inputUserName)).sendKeys(sUserName);
+        driver.findElement(By.id(inputPassword)).sendKeys(sPassword);
         driver.findElement(By.xpath(buttonCommit)).click();
-    }
 
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-    @Test
-    public void test(){
-        driver.get("http://lazycoder.io/feedback");
-        Assert.assertEquals(driver.getTitle(), "Feedback | Lazy Coder IO");
-    }
+        driver.findElement(By.xpath(findRepositoriesSearchField)).sendKeys(searchThisRepositorie);
+        driver.findElement(By.xpath(repositorieFound)).click();
 
-    @Test
-    public void testGTitle(){
-        driver.get("http://lazycoder.io");
-        WebElement gTitle = driver.findElement(By.cssSelector(gTitleLocator));
-        Assert.assertTrue(gTitle.getText().contains("FROM THE BLOG"));
-    }
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-    @Test
-    public void clickLearnButotn(){
-        driver.get("http://lazycoder.io");
+        driver.findElement(By.xpath(folder)).click();
 
-        List<WebElement> buttons = driver.findElements(By.xpath(lButton));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        for(WebElement button:buttons){
-            if(button.getText().contains("LEARN")){
-                //we should interact with the element that matches our criteria.
-                //button.click();
+        driver.findElement(By.xpath(fileToWork)).click();
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        String totalRows =driver.findElement(By.xpath(description)).getText(); //"Executable File  99 lines (78 sloc)  3.07 KB"
+        totalRows=totalRows.replace("Executable File",""); //  99 lines (78 sloc)  3.07 KB
+        totalRows=totalRows.trim();//"99 lines (78 sloc)  3.07 KB"
+        int sizeTotalRow=  totalRows.length();
+        int limit=0;
+        for (int n=0; n<sizeTotalRow; n++)   //We will found the position of l of lines in order to catch the value
+        {
+            char c = totalRows.charAt (n);
+            if(c=='l')
+            {
+                limit=n-1;
+                n=sizeTotalRow+1;
             }
-
-            button.click();
-            break;
         }
+        totalRows=totalRows.substring(0, limit); //"99 "
+        totalRows=totalRows.trim(); //99
+
+        driver.findElement(By.xpath(editButton)).click();
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        WebElement aux= driver.findElement(By.xpath(firstRow));
+        aux.click();
+        aux.sendKeys(Keys.PAGE_DOWN);
+        aux= driver.findElement(By.xpath(firstRow));
+        aux.click();
+        aux.sendKeys(Keys.PAGE_DOWN);
+
+        String lastValue="//*[contains(text(),'"+totalRows+"')]";
+        String lastRowValue=driver.findElement(By.xpath(lastValue)).getText();
+        if(lastRowValue.equals(totalRows))
+            System.out.println("Passed");
+        else
+            System.out.println("Failed");
     }
 
     @AfterTest
-    public void testTeardown(){
+    public void testTeardown()
+    {
         driver.quit();
     }
 }
