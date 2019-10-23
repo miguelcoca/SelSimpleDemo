@@ -41,9 +41,10 @@ public class Chrome {
         WebElement password = driver.findElement(By.xpath("//*[contains(@id, 'password')]"));
         WebElement login = driver.findElement(By.xpath("//input[@value = 'Sign in']"));
         username.sendKeys("jhudy.delgadillo@gmail.com");
-        password.sendKeys("Passs");
+        password.sendKeys("//Passs");
         login.click();
         WebElement userGit = driver.findElement(By.xpath("(//*[contains(text(),'jhudy')])[1]"));
+        Assert.assertNotNull(userGit);
     }
 
     @Test
