@@ -36,12 +36,14 @@ public class Chrome {
 
     @Test
     public void gitLogin() {
-        driver.get("https://github.com/login");
+        driver.get("https://github.com");
+        WebElement singIn = driver.findElement(By.cssSelector("a[href='/login']"));
+        singIn.click();
         WebElement username = driver.findElement(By.xpath("//*[contains(@id, 'login_field')]"));
         WebElement password = driver.findElement(By.xpath("//*[contains(@id, 'password')]"));
         WebElement login = driver.findElement(By.xpath("//input[@value = 'Sign in']"));
         username.sendKeys("jhudy.delgadillo@gmail.com");
-        password.sendKeys("//Passs");
+        password.sendKeys("Passs");
         login.click();
         WebElement userGit = driver.findElement(By.xpath("(//*[contains(text(),'jhudy')])[1]"));
         Assert.assertNotNull(userGit);
