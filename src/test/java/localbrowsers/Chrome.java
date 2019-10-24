@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Test(groups = {"mac", "windows"})
 public class Chrome {
@@ -47,6 +48,25 @@ public class Chrome {
         login.click();
         WebElement userGit = driver.findElement(By.xpath("(//*[contains(text(),'jhudy')])[1]"));
         Assert.assertNotNull(userGit);
+    }
+
+    @Test
+    public void taskModule1() {
+        driver.manage().window().maximize();
+        gitLogin();
+        WebElement project = driver.findElement(By.xpath("(//span[contains(text(),'SelSimpleDemo')])[2]")); //my project
+        project.click();
+        WebElement localBrowser = driver.findElement(By.xpath("//span[@class='simplified-path']"));
+        localBrowser.click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement fileJava = driver.findElement(By.xpath("(//a[contains(text(),'java')])[1]"));
+        fileJava.click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        String infoFile = driver.findElement(By.xpath("//span[@class='file-mode']/parent::div")).getText();
+        WebElement editOption = driver.findElement(By.xpath("//button[@class='btn-octicon tooltipped tooltipped-nw']"));
+        editOption.click();
+        System.out.println(infoFile);
+
     }
 
     @Test
