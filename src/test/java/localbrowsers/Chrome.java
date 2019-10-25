@@ -41,7 +41,6 @@ public class Chrome {
     public String sPassword = "Coflesto7";
     public String buttonCommit = "//input[@name='commit']";
     public String bRepositories="(//span[@class='css-truncate css-truncate-target'])[2]";
-    public String bYourRepositories="//a[text()='Your repositories']";
 
     public String bSingIn="//a[@class='HeaderMenu-link no-underline mr-3']";
     public String lCode="//span[@class='simplified-path']";
@@ -86,7 +85,7 @@ public class Chrome {
         return(totalLines[2]);
     }
 
-    private void goToCodeLines() {
+    private String[] codeLines() {
         driver.findElement(By.xpath(bRepositories)).click();
         driver.findElement(By.xpath(lCode)).click();
         waitPage();
@@ -100,15 +99,20 @@ public class Chrome {
         waitPage();
         WebElement element = driver.findElement(By.xpath(scrollBar));
         js.executeScript("arguments[0].scrollIntoView({block: 'end'});", element);
-
         String editCodeLines = driver.findElement(By.cssSelector(tCodeLines)).getText();
-        System.out.println("editCodeLines: " + editCodeLines );
-        System.out.println("linesTotal: " + linesTotal );
+        String[] codeLinesObj = new String[2];
+        codeLinesObj[0] = linesTotal;
+        codeLinesObj[1] = editCodeLines;
+        return(codeLinesObj);
+
+
     }
     @Test
     public void code(){
-        goToCodeLines();
-        Assert.assertNotNull(driver.findElement(By.xpath(bYourRepositories)));
+        String[] codeLinesObj = codeLines();
+//        System.out.println("linesTotal: " + codeLinesObj[0] );
+//        System.out.println("editCodeLines: " + codeLinesObj[1] );
+        Assert.assertEquals(codeLinesObj[0],codeLinesObj[1]);
     }
 
     @AfterTest
