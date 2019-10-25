@@ -12,6 +12,7 @@ espira test
 package localbrowsers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +26,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.List;
 
 
 @Test(groups = {"mac", "windows"})
@@ -38,18 +40,16 @@ public class Chrome {
     public String inputPassword = "password";
     public String sPassword = "Coflesto7";
     public String buttonCommit = "//input[@name='commit']";
-    public String ghUserName="(//span[contains(text(),'Maloto7')])[1]";
-    public String bProfile="//a[contains(text(),'Your profile')]";
-    public String bAvatar="(//*[@class='avatar'])[2]";
-    public String bSetStatus="(//span[text()='Set status'])[2]";
-    public String bEditProfile="(//button[contains(text(),'Edit profile')])[1]";
     public String bRepositories="(//span[@class='css-truncate css-truncate-target'])[2]";
     public String bYourRepositories="//a[text()='Your repositories']";
 
     public String bSingIn="//a[@class='HeaderMenu-link no-underline mr-3']";
     public String lCode="//span[@class='simplified-path']";
-    public String chromeFile="(//a[@class='js-navigation-open'])[2]";
-
+    public String chromeFile="(//a[@class = 'js-navigation-open'])[2]";
+    public String codeLines="(//div[@class = 'text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0'])";
+    public String bEdit="//button[@class = 'btn-octicon tooltipped tooltipped-nw']";
+    public String tCodeLines=".CodeMirror-code>div:last-child>div>div";
+    public String scrollBar="//div[@class = 'CodeMirror-sizer']";
 
 
     @BeforeTest
@@ -73,27 +73,47 @@ public class Chrome {
         InputPassword.sendKeys(sPassword);
         driver.findElement(By.xpath(buttonCommit)).click();
     }
-
-    private void goToRepositories() {
-        driver.findElement(By.xpath(bRepositories)).click();
-        driver.findElement(By.xpath(lCode)).click();
+    private void waitPage() {
         try{
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
         catch(InterruptedException ie){
         }
-        driver.findElement(By.xpath(chromeFile)).click();
+    }
+    private String totalLines() {
+        String lines = driver.findElement(By.xpath(codeLines)).getText();
+        String[] totalLines = lines.split("\\s+");
+        return(totalLines[2]);
     }
 
+    private void goToCodeLines() {
+        driver.findElement(By.xpath(bRepositories)).click();
+        driver.findElement(By.xpath(lCode)).click();
+        waitPage();
+        driver.findElement(By.xpath(chromeFile)).click();
+        waitPage();
+        String linesTotal = totalLines();
+        driver.findElement(By.xpath(bEdit)).click();
+        waitPage();
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+       // js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        waitPage();
+        WebElement element = driver.findElement(By.xpath(scrollBar));
+        js.executeScript("arguments[0].scrollIntoView({block: 'end'});", element);
+
+        String editCodeLines = driver.findElement(By.cssSelector(tCodeLines)).getText();
+        System.out.println("editCodeLines: " + editCodeLines );
+        System.out.println("linesTotal: " + linesTotal );
+    }
     @Test
     public void code(){
-        goToRepositories();
+        goToCodeLines();
         Assert.assertNotNull(driver.findElement(By.xpath(bYourRepositories)));
     }
 
     @AfterTest
     public void testTeardown()
     {
-//        driver.quit();
+       driver.quit();
     }
 }
