@@ -1,6 +1,7 @@
 package localbrowsers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.apache.commons.lang3.StringUtils.split;
 
 @Test(groups = {"mac", "windows"})
 public class Chrome {
@@ -52,8 +55,13 @@ public class Chrome {
 
     @Test
     public void taskModule1() {
+
         driver.manage().window().maximize();
+
+        //Login on github
         gitLogin();
+
+        //Find File .java
         WebElement project = driver.findElement(By.xpath("(//span[contains(text(),'SelSimpleDemo')])[2]")); //my project
         project.click();
         WebElement localBrowser = driver.findElement(By.xpath("//span[@class='simplified-path']"));
@@ -61,12 +69,35 @@ public class Chrome {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         WebElement fileJava = driver.findElement(By.xpath("(//a[contains(text(),'java')])[1]"));
         fileJava.click();
+
+        //Get Number of Lines of the file .java
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         String infoFile = driver.findElement(By.xpath("//span[@class='file-mode']/parent::div")).getText();
+        String numberLinesCode = getNumberLineOfString(infoFile);
+        System.out.println(numberLinesCode);
+
+        //Go option Edit file
         WebElement editOption = driver.findElement(By.xpath("//button[@class='btn-octicon tooltipped tooltipped-nw']"));
         editOption.click();
-        System.out.println(infoFile);
 
+        //Get Number of Lines of the file .java on the option: Edit
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement scroll = driver.findElement(By.xpath("//div[@class = 'CodeMirror-sizer']"));
+        js.executeScript("arguments[0].scrollIntoView({block: 'end'});", scroll);
+        String numberLinesCodeEdit = driver.findElement(By.cssSelector(".CodeMirror-code>div:last-child>div>div")).getText();
+        System.out.println(numberLinesCodeEdit);
+
+        //Verification
+        Assert.assertEquals(numberLinesCode,numberLinesCodeEdit);
+    }
+
+    //Function to get the Number String
+    private String getNumberLineOfString(String text) {
+
+        String firstText = "Executable File |";
+        String secondText = "lines";
+        String thirdText = text.substring(text.indexOf(firstText) + firstText.length(), text.indexOf(secondText));
+        return thirdText.trim();
     }
 
     @Test
