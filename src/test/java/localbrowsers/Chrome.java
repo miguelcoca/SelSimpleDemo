@@ -95,4 +95,7 @@ public class Chrome {
     public void testTeardown(){
         driver.quit();
     }
+	   @AfterTest
+    public void test1(){
+        driver.quit();
 }
