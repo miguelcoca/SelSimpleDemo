@@ -1,0 +1,53 @@
+----> IMAGEN 1
+https://github.com/jhudy
+
+Set Status
+(//span[text()='Set status'])[2]
+div[class='d-inline-block text-gray-dark']
+span:contains('Set status')
+
+Edit profile   
+(//button[ text()='Edit profile'])[1]
+button[class='btn btn-block mt-2 mb-3 js-profile-editable-edit-button']
+button:contains('Edit profile')
+
+Repositories
+//a[contains(text(),'Repositories')]
+a[href='/jhudy?tab=repositories']
+a[href='/jhudy?tab=repositories'][class='UnderlineNav-item mr-0 mr-md-1 mr-lg-3 '] 
+
+Your Repositories
+//a[contains(text(),'Your repositories')]
+//*[text()[contains(.,'Your repositories')]]
+a[href='/jhudy?tab=repositories'][class='dropdown-item']
+
+
+----> IMAGEN 2
+https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952
+
+Pull Requests
+//span[text()='Pull requests']
+a[href='/miguelcoca/SelSimpleDemo/pulls']
+
+Browse files
+//a[text()='Browse files']
+a[title='Browse the repository at this point in the history']
+
+Parent Commit
+//*[contains(text(),'parent')]
+//div[@class='flex-auto no-wrap text-right']
+div[class='flex-auto no-wrap text-right']
+
+Split
+//a[contains(@href,'split')]
+a[class='btn btn-sm BtnGroup-item']
+span:contains('split')
+
+symbol "+"
+(//*[@data-code-marker="+"])[1]
+span[data-code-marker="+"]
+
+symbol
+//a[@class="js-expand directional-expander single-expander" and @title="Expand All"]
+a[class="js-expand directional-expander single-expander"][title="Expand All"]
+

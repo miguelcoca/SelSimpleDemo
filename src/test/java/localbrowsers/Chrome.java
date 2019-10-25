@@ -3,6 +3,7 @@ package localbrowsers;
 
 import com.google.gson.annotations.Until;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,6 +17,9 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.apache.commons.lang3.StringUtils.split;
 
 @Test(groups = {"mac", "windows"})
 public class Chrome {
@@ -39,6 +43,124 @@ public class Chrome {
     }
 
     @Test
+    public void gitLogin() {
+        driver.get("https://github.com");
+        WebElement singIn = driver.findElement(By.cssSelector("a[href='/login']"));
+        singIn.click();
+        WebElement username = driver.findElement(By.xpath("//*[contains(@id, 'login_field')]"));
+        WebElement password = driver.findElement(By.xpath("//*[contains(@id, 'password')]"));
+        WebElement login = driver.findElement(By.xpath("//input[@value = 'Sign in']"));
+        username.sendKeys("jhudy.delgadillo@gmail.com");
+        password.sendKeys("Passs");
+        login.click();
+        WebElement userGit = driver.findElement(By.xpath("(//*[contains(text(),'jhudy')])[1]"));
+        Assert.assertNotNull(userGit);
+    }
+
+    @Test
+    public void taskModule1() {
+
+        driver.manage().window().maximize();
+
+        //Login on github
+        gitLogin();
+
+        //Find File .java
+        WebElement project = driver.findElement(By.xpath("(//span[contains(text(),'SelSimpleDemo')])[2]")); //my project
+        project.click();
+        WebElement localBrowser = driver.findElement(By.xpath("//span[@class='simplified-path']"));
+        localBrowser.click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement fileJava = driver.findElement(By.xpath("(//a[contains(text(),'java')])[1]"));
+        fileJava.click();
+
+        //Get Number of Lines of the file .java
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        String infoFile = driver.findElement(By.xpath("//span[@class='file-mode']/parent::div")).getText();
+        String numberLinesCode = getNumberLineOfString(infoFile);
+        System.out.println(numberLinesCode);
+
+        //Go option Edit file
+        WebElement editOption = driver.findElement(By.xpath("//button[@class='btn-octicon tooltipped tooltipped-nw']"));
+        editOption.click();
+
+        //Get Number of Lines of the file .java on the option: Edit
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement scroll = driver.findElement(By.xpath("//div[@class = 'CodeMirror-sizer']"));
+        js.executeScript("arguments[0].scrollIntoView({block: 'end'});", scroll);
+        String numberLinesCodeEdit = driver.findElement(By.cssSelector(".CodeMirror-code>div:last-child>div>div")).getText();
+        System.out.println(numberLinesCodeEdit);
+
+        //Verification
+        Assert.assertEquals(numberLinesCode,numberLinesCodeEdit);
+    }
+
+    //Function to get the Number String
+    private String getNumberLineOfString(String text) {
+
+        String firstText = "Executable File |";
+        String secondText = "lines";
+        String thirdText = text.substring(text.indexOf(firstText) + firstText.length(), text.indexOf(secondText));
+        return thirdText.trim();
+    }
+
+    @Test
+    public void setProfile() {
+        gitLogin();
+        WebElement optionsUser = driver.findElement(By.xpath("(//span[@class='dropdown-caret'])[2]"));
+        optionsUser.click();
+        WebElement userProfile = driver.findElement(By.xpath("//a[text()='Your profile']"));
+        userProfile.click();
+        WebElement setProfile = driver.findElement(By.xpath("(//button[ text()='Edit profile'])[1]"));
+        setProfile.click();
+        WebElement bioUser = driver.findElement(By.xpath("//textarea[@name='user[profile_bio]']"));
+        Assert.assertNotNull(bioUser);
+    }
+
+    @Test
+    public void setStatus(){
+        gitLogin();
+        WebElement optionsUser = driver.findElement(By.xpath("(//span[@class='dropdown-caret'])[2]"));
+        optionsUser.click();
+        WebElement userProfile = driver.findElement(By.xpath("//a[text()='Your profile']"));
+        userProfile.click();
+        WebElement setStatus = driver.findElement(By.xpath("(//span[text()='Set status'])[2]"));
+        setStatus.click();
+        WebElement formEditStatus = driver.findElement(By.xpath("(//form[@class='position-relative flex-auto js-user-status-form'])[2]"));
+        Assert.assertNotNull(formEditStatus);
+        System.out.println("llego"+ formEditStatus);
+    }
+
+    @Test
+    public void pullRequestsList() throws InterruptedException {
+        driver.manage().window().maximize();
+        driver.get("https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952");
+        WebElement pullRequestsTab = driver.findElement(By.xpath("//span[text()='Pull requests']"));
+        pullRequestsTab.click();
+        Thread.sleep (1000); // to be able to see the driver procedure calmly and find items that are not immediately available
+        WebElement requestsList = driver.findElement(By.xpath("//*[@id='js-issues-toolbar']"));
+        Assert.assertNotNull(requestsList);
+    }
+
+    @Test
+    public void browseFiles() throws InterruptedException {
+        driver.manage().window().maximize();
+        gitLogin();
+        WebElement project = driver.findElement(By.xpath("(//a[@href='/miguelcoca/SelSimpleDemo'])[1]"));
+        project.click();
+        WebElement commitsTab = driver.findElement(By.xpath("//a[@href='/miguelcoca/SelSimpleDemo/commits/master']"));
+        commitsTab.click();
+        Thread.sleep (1000);   // it is necessary to find the next element
+        WebElement selectCommit = driver.findElement(By.xpath("//*[contains(text(),'couple sample tests added.')]"));
+        selectCommit.click();
+        Thread.sleep (1000);  // it is necessary to find the next element
+        WebElement buttonBrowseFiles = driver.findElement(By.xpath("//a[text()='Browse files']"));
+        buttonBrowseFiles.click();
+        WebElement tableFiles = driver.findElement(By.xpath("//table[@class='files js-navigation-container js-active-navigation-container']"));
+        Assert.assertNotNull(tableFiles);
+    }
+
+    @Test
     public void login(){
         loginAction();
         Assert.assertNotNull(driver.findElement(By.xpath(ghUserName)));
@@ -59,7 +181,6 @@ public class Chrome {
 
         driver.findElement(By.xpath(buttonCommit)).click();
     }
-
 
     @Test
     public void test(){
