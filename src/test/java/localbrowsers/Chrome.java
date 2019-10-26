@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Test(groups = {"mac", "windows"})
 public class Chrome {
@@ -24,9 +25,9 @@ public class Chrome {
     public String gTitleLocator=".g-title";
     public String lButton = "//a[@href='https://seleniumaboveandbeyond.com' and contains(@class,'button')]";
     public String inputUserName = "login_field";
-    public String sUserName = "redridehell@gmail.com";
+    public String sUserName = "lineth.mendieta.n@gmail.com";
     public String inputPassword = "password";
-    public String sPassword = "noVoyAEscribirMiPasswd";
+    public String sPassword = "Linemn2503";
     public String buttonCommit = "//input[@name='commit']";
     public String ghUserName="(//span[contains(text(),'miguelcoca')])[8]";
 
@@ -37,6 +38,22 @@ public class Chrome {
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new ChromeDriver(capabilities);
     }
+    @Test
+    public void codigo() throws InterruptedException {
+        loginAction();
+        WebElement Proyecto = driver.findElement(By.xpath("(//span[contains(.,'SelSimpleDemo')])[2]"));
+        Proyecto.click();
+        WebElement Browser = driver.findElement(By.xpath("//span[@class='simplified-path']"));
+        Browser.click();
+        Thread.sleep (5000);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement fileJava = driver.findElement(By.xpath("//a[@title='Chrome.java']"));
+        fileJava.click();
+        WebElement editFile = driver.findElement(By.xpath("//button[contains(@aria-label,'Edit this file')]"));
+        editFile.click();
+        Thread.sleep (10000);
+    }
+
 
     @Test
     public void login(){
@@ -46,6 +63,7 @@ public class Chrome {
 
     private void loginAction() {
         driver.navigate().to("https://github.com/login");
+
 
         WebDriverWait customWait = new WebDriverWait(driver,60);
         customWait.until(ExpectedConditions.
