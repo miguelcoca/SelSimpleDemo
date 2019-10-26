@@ -7,15 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
 
+import java.util.concurrent.TimeUnit;
 @Test(groups = {"mac", "windows"})
 public class Chrome {
     private WebDriver driver;
@@ -43,35 +41,37 @@ public class Chrome {
     public String aBrowse="//a[(text()='Browse files')]";
     public String summaryClone="//summary[@class='btn btn-sm ml-2 btn-primary']";
 
-    /*
-    -Tab Pull requests
-       Xpath:    //a[(contains(@class,'js')) and (@href='/miguelcoca/SelSimpleDemo/pulls')]
-       Css:      a[href='/miguelcoca/SelSimpleDemo/pulls']
-    -Boton Browse Files
-       Xpath:   //a[(text()='Browse files')]
-       Css:     a[title='Browse the repository at this point in the history']
-    -1 parent ....
-       Xpath:   //div[(@class='flex-auto no-wrap text-right')]
-       Css:     div[class='flex-auto no-wrap text-right']
-    -Boton Split
-       Xpath:   //a[contains(text(),'Split')]
-       Css:     a[href='https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952?diff=split']
-    -Expand all
-       Xpath:   //a[contains(@title,'Expand All')]
-       Css:     a[title='Expand All']
-    -Boton Edit profile
-       Xpath:   (//button[(text()='Edit profile') and (@name='button')])[1]
-       Css:     div.d-none div.js-profile-editable-area div.hide-sm button[name='button']
-    -Set status
-       Xpath:   (//span[(text()='Set status')])[2]
-       Css:     div.pt-1.ws-normal div.d-inline-block.text-gray-dark span.text-gray.ml-2
-    -Tab repositories
-       Xpath:   //a[(contains(@class,'UnderlineNav')) and (@href='/danieldas?tab=repositories')]
-       Css:     a.UnderlineNav-item[href='/danieldas?tab=repositories']
-    -Menu Your repositories
-       Xpath:   //a[(contains(@class,'drop')) and (@href='/danieldas?tab=repositories')]
-       Css:     a.dropdown-item[href='/danieldas?tab=repositories']
-    */
+/*
+-Tab Pull requests
+   Xpath:    //a[(contains(@class,'js')) and (@href='/miguelcoca/SelSimpleDemo/pulls')]
+   Css:      a[href='/miguelcoca/SelSimpleDemo/pulls']
+-Boton Browse Files
+   Xpath:   //a[(text()='Browse files')]
+   Css:     a[title='Browse the repository at this point in the history']
+-1 parent ....
+   Xpath:   //div[(@class='flex-auto no-wrap text-right')]
+   Css:     div[class='flex-auto no-wrap text-right']
+-Boton Split
+   Xpath:   //a[contains(text(),'Split')]
+   Css:     a[href='https://github.com/miguelcoca/SelSimpleDemo/commit/4a8f0ff5e879d687b24c9b39f17ffdf6358c6952?diff=split']
+-Expand all
+   Xpath:   //a[contains(@title,'Expand All')]
+   Css:     a[title='Expand All']
+-Boton Edit profile
+   Xpath:   (//button[(text()='Edit profile') and (@name='button')])[1]
+   Css:     div.d-none div.js-profile-editable-area div.hide-sm button[name='button']
+-Set status
+   Xpath:   (//span[(text()='Set status')])[2]
+   Css:     div.pt-1.ws-normal div.d-inline-block.text-gray-dark span.text-gray.ml-2
+-Tab repositories
+   Xpath:   //a[(contains(@class,'UnderlineNav')) and (@href='/danieldas?tab=repositories')]
+   Css:     a.UnderlineNav-item[href='/danieldas?tab=repositories']
+-Menu Your repositories
+   Xpath:   //a[(contains(@class,'drop')) and (@href='/danieldas?tab=repositories')]
+   Css:     a.dropdown-item[href='/danieldas?tab=repositories']
+*/
+
+
     public String aSignIn="//a[(@href='/login')]";
     public String aSimpleDemo="(//a[(@href='/danieldas/SelSimpleDemo')])[1]";
     public String aLocalBrowsers="//a[(@href='/danieldas/SelSimpleDemo/tree/master/src/test/java/localbrowsers')]";
@@ -80,6 +80,7 @@ public class Chrome {
     public String cantidadLineas, cantidadLineas2;
     public String btnEdit="//button[(@class='btn-octicon tooltipped tooltipped-nw')]";
     public String divPadre="//div[@class = 'CodeMirror-sizer']";
+
     @BeforeTest
     public void chromeSetup(){
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
@@ -122,9 +123,7 @@ public class Chrome {
     }
 
     private void loginAction() {
-        //   driver.navigate().to("https://github.com/login");
-        //    WebDriverWait customWait= new WebDriverWait(driver, 50);
-        //      customWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(inputUserName)));
+        driver.navigate().to("https://github.com/login");
 
         WebElement InputUserName = driver.findElement(By.id(inputUserName));
         InputUserName.sendKeys(sUserName);
