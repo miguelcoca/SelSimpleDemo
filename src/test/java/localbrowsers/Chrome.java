@@ -34,7 +34,6 @@ package localbrowsers;
 span.blob-code-inner.blob-code-marker[data-code-marker='+']
 
 * */
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
