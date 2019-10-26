@@ -86,8 +86,6 @@ public class Chrome {
     public String row = "//span[@class='file-mode' ]//parent::div";
 
 
-    public String paso4 = "a[href*='Chrome.java']";
-
     @BeforeTest
     public void chromeSetup() {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
